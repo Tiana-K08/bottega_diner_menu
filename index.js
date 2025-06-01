@@ -30,17 +30,25 @@
 // }
 
 // Select a random comment from a predefined list
-function randomComment() {
-    const comments = [
-        'Recomendación del chef. ¡Simplemente espectacular!',
-        '¡Este plato alegra cualquier día!',
-        'Uno de los favoritos de nuestros clientes.',
-        '¡Excelente elección! Este plato es muy popular.',
-        '¡Elección perfecta! Estás a la moda culinaria.',
-        '¡Una delicia! No te arrepentirás.'
-    ];
-    return comments[Math.floor(Math.random() * comments.length)];
+// function randomComment() {
+//     const comments = [
+//         'Recomendación del chef. ¡Simplemente espectacular!',
+//         '¡Este plato alegra cualquier día!',
+//         'Uno de los favoritos de nuestros clientes.',
+//         '¡Excelente elección! Este plato es muy popular.',
+//         '¡Elección perfecta! Estás a la moda culinaria.',
+//         '¡Una delicia! No te arrepentirás.'
+//     ];
+//     return comments[Math.floor(Math.random() * comments.length)];
+// }
+
+// Normalize user input for consistent processing
+function normalizeInputText(inputText) {
+    return inputText
+        .toLowerCase() // Convert to lowercase
+        .normalize('NFD') // Normalize to decompose characters
+        .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+        .replace(/[^a-z0-9\s]/g, '') // Remove non-alphanumeric characters except spaces
+        .replace(/\s+/g, ' ') // Replace multiple spaces with a single space
+        .trim(); // Remove leading and trailing spaces
 }
-
-
-console.log(randomComment());
