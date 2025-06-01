@@ -4,7 +4,7 @@ const timePattern = /^(?:[0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
 const clientExit = '¡Vuelve pronto!\nSiempre eres bienvenido en Bottega Diner.';
 let mealType = '';
 
-outerLoop: while (mealType == '' || mealType == 'invalid') {
+outerLoop: while (mealType === '' || mealType === 'invalid') {
     timeInput = prompt('¡Bienvenido a Bottega Diner!\nNuestra cocina trabaja para usted todos los días de 08:30 a 23:00.\n\nPor favor, introduzca la hora actual en formato HH:MM');
     if (timeInput === null) {
         alert(clientExit);
@@ -80,6 +80,14 @@ const extras = [
     {name: 'Nada', price: 0.00}
 ];
 
+// Increasing prices by 20%
+function increasedPrices(menu) {
+    return menu.map(item => ({
+        name: item.name,
+        price: parseFloat((item.price * 1.20).toFixed(2))
+    }));
+}
+
 // Selecting item names for menu generation
 function itemsSelection(courses, title) {
     let choiceInput;
@@ -121,7 +129,7 @@ function itemsSelection(courses, title) {
 }
 
 // Generating a lunch menu with user-selected items
-function lunchMenuSelection(firstCourses, secondCourses, desserts, extras) {
+function menuSelection(firstCourses, secondCourses, desserts, extras) {
         const first = itemsSelection(firstCourses, "Elija el primer plato:");
         if (first === null) return;
 
@@ -140,7 +148,16 @@ function lunchMenuSelection(firstCourses, secondCourses, desserts, extras) {
         alert(factura);
     }
 
+// Selecting menu according to meal type
 if (mealType === 'lunch') {
-    lunchMenuSelection(firstCourses, secondCourses, desserts, extras);
+    menuSelection(firstCourses, secondCourses, desserts, extras);
+} else if (mealType === 'dinner') {
+    menuSelection(
+        increasedPrices(firstCourses),
+        increasedPrices(secondCourses),
+        increasedPrices(desserts),
+        increasedPrices(extras)
+    );
+} else {
+    // Handling closed or invalid time
 }
-
