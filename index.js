@@ -54,6 +54,21 @@ function normalizeText(text) {
 }
 
 // Menu cards with prices
+const breakfastFood = [
+    {name: 'Tortilla', price: 2.60},
+    {name: 'Croissant', price: 1.80},
+    {name: 'Bocadillo', price: 2.20},
+    {name: 'Nada', price: 0.00}
+];
+
+const breakfastDrink = [
+    {name: 'Café', price: 1.60},
+    {name: 'Zumo', price: 1.80},
+    {name: 'Té', price: 1.40},
+    {name: 'Colacao', price: 2.20},
+    {name: 'Nada', price: 0.00}
+];
+
 const firstCourses = [
     {name: 'Ensalada', price: 5.50},
     {name: 'Sopa', price: 4.50},
@@ -129,6 +144,19 @@ function itemsSelection(courses, title) {
 }
 
 // Generating a lunch menu with user-selected items
+function breakfastMenuSelection(breakfastFood, breakfastDrink) {
+    const food = itemsSelection(breakfastFood, "Elija su desayuno:");
+    if (food === null) return;
+
+    const drink = itemsSelection(breakfastDrink, "Elija una bebida para acompañar:");
+    if (drink === null) return;
+
+    const total = food.price + drink.price;
+
+    const factura = `FACTURA FINAL - DESAYUNO:\nDesayuno: ${food.name} - €${food.price.toFixed(2)}\nBebida: ${drink.name} - €${drink.price.toFixed(2)}\n\nTOTAL A PAGAR: €${total.toFixed(2)}\n¡Gracias por comenzar el día con nosotros!`;
+    alert(factura);
+}
+
 function menuSelection(firstCourses, secondCourses, desserts, extras) {
         const first = itemsSelection(firstCourses, "Elija el primer plato:");
         if (first === null) return;
@@ -149,7 +177,9 @@ function menuSelection(firstCourses, secondCourses, desserts, extras) {
     }
 
 // Selecting menu according to meal type
-if (mealType === 'lunch') {
+if (mealType === 'breakfast') {
+    breakfastMenuSelection(breakfastFood, breakfastDrink);
+} else if (mealType === 'lunch') {
     menuSelection(firstCourses, secondCourses, desserts, extras);
 } else if (mealType === 'dinner') {
     menuSelection(
@@ -158,6 +188,8 @@ if (mealType === 'lunch') {
         increasedPrices(desserts),
         increasedPrices(extras)
     );
+} else if (mealType === 'closed') {
+    alert('Lo sentimos, nuestra cocina está cerrada en este momento. Por favor, vuelva más tarde.');
 } else {
-    // Handling closed or invalid time
+    // Handling client exit
 }
